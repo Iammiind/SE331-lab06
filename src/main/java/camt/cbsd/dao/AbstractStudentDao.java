@@ -20,7 +20,10 @@ public abstract class AbstractStudentDao implements StudentDao {
     }
 
     String imageBaseUrl;
-
+    @Override
+    public List<Student> getStudents() {
+        return students;
+    }
     @Override
     public Student findById(long id) {
         return students.stream().filter(s -> s.getId() == id).findFirst().orElse(null);
