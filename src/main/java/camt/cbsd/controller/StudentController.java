@@ -18,6 +18,7 @@ import java.util.List;
 @Path("/student")
 public class StudentController {
     StudentService studentService;
+
     @Autowired
     public void setStudentService(StudentService studentService) {
         this.studentService = studentService;
@@ -25,7 +26,7 @@ public class StudentController {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getStudents(){
+    public Response getStudents() {
 
         List<Student> students = studentService.getStudents();
         return Response.ok(students).build();
@@ -36,6 +37,11 @@ public class StudentController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getStudent(@PathParam("id") long id) {
         Student student = studentService.findById(id);
-        return Response.ok(student).build();
+        if (student != null)
+            return Response.ok(student).build();
+        else
+            //http code
+            return Response.status(Response.Status.NO_CONTENT).build();
+
     }
 }
